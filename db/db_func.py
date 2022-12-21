@@ -171,16 +171,10 @@ class FuncDB():
         self.session.close()
         
 def add_data(data: list, *models):
-    for model in models:
-        string = str(model).lower()
-        model_str = string[25:].strip("'>")
-        for dictionary in data:
-            if dictionary['model'] == model_str:
-                session.add(model(id=dictionary.get('pk'), **dictionary.get('fields')))
-            session.commit()
+    pass
 
 
-def output_publisher(pers_input):
+def output_publisher():
     if pers_input.isdigit():
         query = session.query(Publisher).filter(Publisher.id == pers_input).all()
     else:
