@@ -169,6 +169,41 @@ class FuncDB():
         :return: None
         """
         self.session.close()
+        
+def add_data(data: list, *models):
+    for model in models:
+        string = str(model).lower()
+        model_str = string[25:].strip("'>")
+        for dictionary in data:
+            if dictionary['model'] == model_str:
+                session.add(model(id=dictionary.get('pk'), **dictionary.get('fields')))
+            session.commit()
+
+
+def output_publisher(pers_input):
+    if pers_input.isdigit():
+        query = session.query(Publisher).filter(Publisher.id == pers_input).all()
+    else:
+        query = session.query(Publisher).filter(Publisher.name == pers_input).all()
+    if query:
+        for output in query:
+            return output
+    return 'Publisher with this id does not exist'
+
+
+def output_shop(pers_input):
+    query = session.query(Shop)
+    query = query.join(Stock)
+    query = query.join(Book)
+    query = query.join(Publisher)
+    if pers_input.isdigit():
+        query = query.filter(Publisher.id == pers_input).all()
+    else:
+        query = query.filter(Publisher.name == pers_input).all()
+    if query:
+        for output in query:
+            return output
+    return 'Publisher with this id does not exist'
 
 
 if __name__ == "__main__":
