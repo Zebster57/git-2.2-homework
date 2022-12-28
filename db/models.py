@@ -98,6 +98,14 @@ class Post(Base):
     updated_on = Column(DateTime(), default=datetime.now, onupdate=datetime.now)
 
 
+class Author(Base):
+    __tablename__ = 'authors'
+    id = Column(Integer, primary_key=True)
+    first_name = Column(String(100), nullable=False)
+    last_name = Column(String(100), nullable=False)
+    books = relationship("Book")
+    
+
 def create_tables(engine):
     """Функция для создания моделей в БД"""
     Base.metadata.create_all(engine)
