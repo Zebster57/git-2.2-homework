@@ -96,6 +96,20 @@ class Post(Base):
     published = Column(String(200), nullable=False, unique=True)    
     created_on = Column(DateTime(), default=datetime.now)
     updated_on = Column(DateTime(), default=datetime.now, onupdate=datetime.now)
+    
+
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer)
+    username = Column(String(100), nullable=False)
+    email = Column(String(100), nullable=False)    
+    password = Column(String(200), nullable=False)
+    
+    __table_args__ = (
+        PrimaryKeyConstraint('id', name='user_pk'),
+        UniqueConstraint('username'),
+        UniqueConstraint('email'),
+    )
 
 
 def create_tables(engine):
