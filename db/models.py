@@ -87,20 +87,15 @@ class Stock(Base):
                f"id_shop: {self.shop_id}, count: {self.count})"
 
 
-class Sale(Base):
-    __tablename__ = 'sale'
-
-    id = sq.Column(sq.Integer, primary_key=True)
-    price = sq.Column(sq.DECIMAL(6, 2), nullable=False)
-    date_sale = sq.Column(sq.DateTime)
-    count = sq.Column(sq.Integer, nullable=False)
-    stock = sq.Column(sq.Integer, sq.ForeignKey('stock.id'), nullable=False)
-
-    stock_id = relationship('Stock', backref="sale_id")
-
-    def __str__(self):
-        return f"(id: {self.id}, price: {self.price}, date_sale: {self.date_sale}," \
-               f"id_stock: {self.stock_id}, count: {self.count})"
+class Post(Base):
+    __tablename__ = 'posts'
+    id = Column(Integer, primary_key=True)
+    title = Column(String(100), nullable=False)
+    slug = Column(String(100), nullable=False)
+    content = Column(String(50), nullable=False)
+    published = Column(String(200), nullable=False, unique=True)    
+    created_on = Column(DateTime(), default=datetime.now)
+    updated_on = Column(DateTime(), default=datetime.now, onupdate=datetime.now)
 
 
 def create_tables(engine):
